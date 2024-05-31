@@ -1,0 +1,1 @@
+<a onclick="return gtag_report_conversion('https://www.googletagmanager.com/gtag/js?id=G-TKY758QMD5');" href="https://sinergimax.com/contact-us/"></a>

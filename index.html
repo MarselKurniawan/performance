@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Hotel Data Dashboard</h1>
+
+        <div class="mb-6">
+            <form id="import-form" action="php/import.php" method="post" enctype="multipart/form-data">
+                <label class="block mb-2 text-sm font-medium text-gray-900">Import Excel File:</label>
+                <input type="file" name="file"
+                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+                <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Upload</button>
+            </form>
+        </div>
+
+        <div class="mb-6">
+            <label for="month-filter" class="block mb-2 text-sm font-medium text-gray-900">Filter by Month:</label>
+            <select id="month-filter"
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+                <option value="all">Show All</option>
+                <!-- Options will be dynamically generated -->
+            </select>
+
+            <label for="date-filter" class="block mt-4 mb-2 text-sm font-medium text-gray-900">Filter by Date:</label>
+            <select id="date-filter"
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+                <option value="all">Show All</option>
+                <!-- Options will be dynamically generated -->
+            </select>
+        </div>
+
+        <table id="hotelData" class="display">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Day</th>
+                    <th>Total Available</th>
+                    <th>Room Sold</th>
+                    <th>Occupancy</th>
+                    <th>Room Revenue</th>
+                    <th>ADR</th>
+                    <th>Total Revenue</th>
+                    <th>Available to Sale</th>
+                    <th>Estimate Room Pick Up</th>
+                    <th>Estimate ADR Pick Up</th>
+                    <th>Estimate Room Revenue</th>
+                    <th>Estimate Total Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-11
+
+            // Populate month filter with options
+            for (let i = 1; i <= 12; i++) {
+                $('#month-filter').append(new Option(i, i, i === currentMonth, i === currentMonth));
+            }
+
+            // Populate date filter with options
+            for (let i = 1; i <= 31; i++) {
+                $('#date-filter').append(new Option(i, i));
+            }
+
+            function loadData(month = 'all', day = 'all') {
+                $('#hotelData').DataTable({
+                    "ajax": {
+                        "url": "php/get_data.php",
+                        "type": "POST",
+                        "data": {
+                            "month": month,
+                            "day": day
+                        }
+                    },
+                    "destroy": true,
+                    "columns": [
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                return meta.row + 1;
+                            }
+                        },
+                        { "data": "day" },
+                        { "data": "total_available" },
+                        { "data": "room_sold" },
+                        { "data": "occupancy" },
+                        { "data": "room_revenue" },
+                        { "data": "adr" },
+                        { "data": "total_revenue" },
+                        { "data": "available_to_sale" },
+                        { "data": "estimate_room_pickup" },
+                        { "data": "estimate_adr_pickup" },
+                        { "data": "estimate_room_revenue" },
+                        { "data": "estimate_total_revenue" }
+                    ]
+                });
+            }
+
+            // Load data for the current month by default
+            loadData(currentMonth);
+
+            // Event listeners for filters
+            $('#month-filter, #date-filter').change(function () {
+                const selectedMonth = $('#month-filter').val();
+                const selectedDate = $('#date-filter').val();
+                loadData(selectedMonth, selectedDate);
+            });
+        });
+    </script>
+
+</body>
+
+</html>
