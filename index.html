@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 </head>
 
 <body class="bg-gray-100 p-6">
@@ -18,68 +19,105 @@
         <h1 class="text-3xl font-bold mb-6">Hotel Data Dashboard</h1>
 
         <div class="mb-6">
-            <form id="import-form" action="php/import.php" method="post" enctype="multipart/form-data">
-                <label class="block mb-2 text-sm font-medium text-gray-900">Import Excel File:</label>
-                <input type="file" name="file"
-                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
-                <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Upload</button>
-            </form>
-        </div>
-
-        <div class="mb-6">
             <label for="month-filter" class="block mb-2 text-sm font-medium text-gray-900">Filter by Month:</label>
-            <select id="month-filter"
-                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
-                <option value="all">Show All</option>
-                <!-- Options will be dynamically generated -->
-            </select>
+            <div class="flex items-center ">
+                <input type="month" id="month-filter"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value="">
+                <input type="checkbox" id="month-all" class="ml-4">
+                <label for="month-all" class="ml-2 text-sm font-medium text-gray-900">Show All</label>
+            </div>
 
             <label for="date-filter" class="block mt-4 mb-2 text-sm font-medium text-gray-900">Filter by Date:</label>
-            <select id="date-filter"
-                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
-                <option value="all">Show All</option>
-                <!-- Options will be dynamically generated -->
-            </select>
+            <div class="flex items-center">
+                <input type="date" id="date-filter"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value="">
+                <input type="checkbox" id="date-all" class="ml-4">
+                <label for="date-all" class="ml-2 text-sm font-medium text-gray-900">Show All</label>
+            </div>
         </div>
 
-        <table id="hotelData" class="display">
-            <thead>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table id="hotelData" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th>No</th>
-                    <th>Day</th>
-                    <th>Total Available</th>
-                    <th>Room Sold</th>
-                    <th>Occupancy</th>
-                    <th>Room Revenue</th>
-                    <th>ADR</th>
-                    <th>Total Revenue</th>
-                    <th>Available to Sale</th>
-                    <th>Estimate Room Pick Up</th>
-                    <th>Estimate ADR Pick Up</th>
-                    <th>Estimate Room Revenue</th>
-                    <th>Estimate Total Revenue</th>
+                    <th class="px-4 py-2">No</th>
+                    <th class="px-4 py-2">Day</th>
+                    <th class="px-4 py-2">Total Available</th>
+                    <th class="px-4 py-2">Room Sold</th>
+                    <th class="px-4 py-2">Occupancy</th>
+                    <th class="px-4 py-2">Room Revenue</th>
+                    <th class="px-4 py-2">ADR</th>
+                    <th class="px-4 py-2">Total Revenue</th>
+                    <th class="px-4 py-2">Available to Sale</th>
+                    <th class="px-4 py-2">Estimate Room Pick Up</th>
+                    <th class="px-4 py-2">Estimate ADR Pick Up</th>
+                    <th class="px-4 py-2">Estimate Room Revenue</th>
+                    <th class="px-4 py-2">Estimate Total Revenue</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Data will be inserted here dynamically -->
+            <tbody >
+                
             </tbody>
         </table>
     </div>
 
+
+
+        <!-- <div class="table2 relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table id="hotelData" class="display w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th class="px-4 py-2">No</th>
+                        <th class="px-4 py-2">Day</th>
+                        <th class="px-4 py-2">Total Available</th>
+                        <th class="px-4 py-2">Room Sold</th>
+                        <th class="px-4 py-2">Occupancy</th>
+                        <th class="px-4 py-2">Room Revenue</th>
+                        <th class="px-4 py-2">ADR</th>
+                        <th class="px-4 py-2">Total Revenue</th>
+                        <th class="px-4 py-2">Available to Sale</th>
+                        <th class="px-4 py-2">Estimate Room Pick Up</th>
+                        <th class="px-4 py-2">Estimate ADR Pick Up</th>
+                        <th class="px-4 py-2">Estimate Room Revenue</th>
+                        <th class="px-4 py-2">Estimate Total Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                 
+                </tbody>
+            </table>
+        </div> -->
+
+        <h2 class="text-2xl font-bold mt-8 mb-4">Monthly Summary</h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table id="summaryData" class="display w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th class="px-4 py-2">Metric</th>
+                        <th class="px-4 py-2">Current MTD</th>
+                        <th class="px-4 py-2">Current Onhand</th>
+                        <th class="px-4 py-2">Predicted Achievement</th>
+                        <th class="px-4 py-2">Budget</th>
+                        <th class="px-4 py-2">Gap (Budget)</th>
+                        <th class="px-4 py-2">LYSM</th>
+                        <th class="px-4 py-2">Gap (LYSM)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script>
         $(document).ready(function () {
             const currentDate = new Date();
-            const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-11
-
-            // Populate month filter with options
-            for (let i = 1; i <= 12; i++) {
-                $('#month-filter').append(new Option(i, i, i === currentMonth, i === currentMonth));
-            }
-
-            // Populate date filter with options
-            for (let i = 1; i <= 31; i++) {
-                $('#date-filter').append(new Option(i, i));
-            }
+            const currentMonth = currentDate.getMonth() + 1;
+            const currentDay = currentDate.getDate();
 
             function loadData(month = 'all', day = 'all') {
                 $('#hotelData').DataTable({
@@ -89,6 +127,9 @@
                         "data": {
                             "month": month,
                             "day": day
+                        },
+                        "dataSrc": function (json) {
+                            return json.data.filter(row => row.total_available != 0);
                         }
                     },
                     "destroy": true,
@@ -97,35 +138,149 @@
                             "data": null,
                             "render": function (data, type, row, meta) {
                                 return meta.row + 1;
+                            },
+                            "className": "px-4 py-2"
+                        },
+                        { "data": "day", "className": "px-4 py-2" },
+                        { "data": "total_available", "className": "px-4 py-2" },
+                        { "data": "room_sold", "className": "px-4 py-2" },
+                        {
+                            "data": "occupancy",
+                            "className": "px-4 py-2",
+                            "render": function (data, type, row) {
+                                if (type === 'display') {
+                                    var occupancyText = data + '%';
+                                    var occupancyWidth = data + '%';
+                                    return `<div class="w-full bg-gray-300 rounded-full dark:bg-gray-700">
+                                        <div class="bg-blue-600 text-xs font-medium text-gray-800 text-center p-0.5 leading-none rounded-full" style="width: ${occupancyWidth}"> 
+                                            <span class="p-1.5 text-white ">${occupancyText}</span>
+                                            </div>
+                                    </div>
+                                    `;
+                                }
+                                return data;
                             }
                         },
-                        { "data": "day" },
-                        { "data": "total_available" },
-                        { "data": "room_sold" },
-                        { "data": "occupancy" },
-                        { "data": "room_revenue" },
-                        { "data": "adr" },
-                        { "data": "total_revenue" },
-                        { "data": "available_to_sale" },
-                        { "data": "estimate_room_pickup" },
-                        { "data": "estimate_adr_pickup" },
-                        { "data": "estimate_room_revenue" },
-                        { "data": "estimate_total_revenue" }
-                    ]
+                        {
+                            "data": "room_revenue",
+                            "className": "px-4 py-2",
+                            "render": function (data, type) {
+                                if (type === 'display') {
+                                    var txt = 'Rp.' + data;
+                                    return txt;
+                                }
+                                return data;
+
+                            }
+                        },
+                        {
+                            "data": "adr",
+                            "className": "px-4 py-2",
+                            "render": function (data, type) {
+                                if (type === 'display') {
+                                    var txt = 'Rp.' + data;
+                                    return txt;
+                                }
+                                return data;
+
+                            }
+                        },
+                        {
+                            "data": "total_revenue",
+                            "className": "px-4 py-2",
+                            "render": function (data, type) {
+                                if (type === 'display') {
+                                    var txt = 'Rp.' + data;
+                                    return txt;
+                                }
+                                return data;
+
+                            }
+                        },
+                        { "data": "available_to_sale", "className": "px-4 py-2" },
+                        {
+                            "data": "estimate_room_pickup",
+                            "className": "px-4 py-2",
+                            "render": function (data, type, row) {
+                                const isDisabled = new Date(row.day) < currentDate ? 'disabled' : '';
+                                return `<input type="number" value="${data}" ${isDisabled} class="estimate-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />`;
+                            }
+                        },
+                        {
+                            "data": "estimate_adr_pickup",
+                            "className": "px-4 py-2",
+                            "render": function (data, type, row) {
+                                const isDisabled = new Date(row.day) < currentDate ? 'disabled' : '';
+                                return `<input type="number" value="${data}" ${isDisabled} class="estimate-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />`;
+                            }
+                        },
+                        {
+                            "data": "estimate_room_revenue",
+                            "className": "px-4 py-2",
+                            "render": function (data, type) {
+                                if (type === 'display') {
+                                    var txt = 'Rp.' + data;
+                                    return txt;
+                                }
+                                return data;
+
+                            }
+                        },
+                        {
+                            "data": "estimate_total_revenue",
+                            "className": "px-4 py-2",
+                            "render": function (data, type) {
+                                if (type === 'display') {
+                                    var txt = 'Rp.' + data;
+                                    return txt;
+                                }
+                                return data;
+
+                            }
+                        },
+                    ],
+                    "initComplete": function () {
+                        $('table').addClass('min-w-full divide-y divide-gray-200 dark:divide-gray-700');
+                        $('th').addClass('px-4 py-2 bg-gray-50 dark:bg-gray-700');
+                        $('td').addClass('px-4 py-2');
+                    }
+                });
+
+                $('#summaryData').DataTable({
+                    "ajax": {
+                        "url": "php/get_summary.php",
+                        "type": "GET",
+                        "dataSrc": 'data'
+                    },
+                    "destroy": true,
+                    "columns": [
+                        { "data": "metric", "className": "px-4 py-2" },
+                        { "data": "current_mtd", "className": "px-4 py-2" },
+                        { "data": "current_onhand", "className": "px-4 py-2" },
+                        { "data": "predicted_achievement", "className": "px-4 py-2" },
+                        { "data": "budget", "className": "px-4 py-2" },
+                        { "data": "gap_budget", "className": "px-4 py-2" },
+                        { "data": "lysm", "className": "px-4 py-2" },
+                        { "data": "gap_lysm", "className": "px-4 py-2" }
+                    ],
+                    "initComplete": function () {
+                        $('table').addClass('min-w-full divide-y divide-gray-200 dark:divide-gray-700');
+                        $('th').addClass('px-4 py-2 bg-gray-50 dark:bg-gray-700');
+                        $('td').addClass('px-4 py-2');
+                    }
                 });
             }
 
-            // Load data for the current month by default
             loadData(currentMonth);
 
-            // Event listeners for filters
-            $('#month-filter, #date-filter').change(function () {
-                const selectedMonth = $('#month-filter').val();
-                const selectedDate = $('#date-filter').val();
+            $('#month-filter, #month-all, #date-filter, #date-all').change(function () {
+                const selectedMonth = $('#month-all').is(':checked') ? 'all' : $('#month-filter').val();
+                const selectedDate = $('#date-all').is(':checked') ? 'all' : $('#date-filter').val();
                 loadData(selectedMonth, selectedDate);
             });
         });
     </script>
+    
 
 </body>
 

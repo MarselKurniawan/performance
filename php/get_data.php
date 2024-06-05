@@ -42,15 +42,27 @@ if ($month !== 'all' && $day !== 'all') {
 $stmt->execute();
 $result = $stmt->get_result();
 
+// Fetch data from the database
 $data = array();
 while ($row = $result->fetch_assoc()) {
+    // Calculate the "Available to Sale" value
+    $total_available = $row['total_available'];
+    $room_sold = $row['room_sold'];
+    $available_to_sale = $total_available - $room_sold;
+
+    // Add the "Available to Sale" value to the row
+    $row['available_to_sale'] = $available_to_sale;
+
+    // Add the row to the data array
     $data[] = $row;
 }
 
+// Prepare the response
 $response = array(
     "data" => $data
 );
 
+// Send the JSON response
 echo json_encode($response);
 
 $conn->close();
